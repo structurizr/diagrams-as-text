@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Diagrams as text</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+
+    <link href="./css/bootstrap-3.3.2.min.css" rel="stylesheet" media="screen">
+    <link href="./css/bootstrap-theme-3.3.2.min.css" rel="stylesheet" media="screen">
+
+    <script src="./js/jquery-2.0.3.min.js"></script>
+    <script src="./js/bootstrap-3.3.2.min.js"></script>
+
+    <link href="./css/styles.css" rel="stylesheet" media="screen">
+    <link href='./css/open-sans.css' rel='stylesheet' type='text/css' />
+</head>
+
+<body>
+    <div id="content">
+
+        <div class="section">
+            <div class="container">
+                <div class="centered">
+                    <h1>Diagrams as text</h1>
+                    <p>with</p>
+                    <div class="row">
+                        <div class="col-md-3"></div>
+                        <div class="col-md-6 centered">
+                            <a href="https://structurizr.com" target="_blank"><img src="./img/structurizr-banner.png" alt="Structurizr - diagrams as text" class="img-responsive" style="margin-top: 20px" /></a>
+                        </div>
+                        <div class="col-md-3"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="navigation">
+            <a href="#Benefits">Benefits</a> |
+            <a href="#TradeOffs">Trade-offs</a> |
+            <a href="#Implementations">Implementations - DSL, YAML</a> |
+            <a href="https://c4model.com" target="_blank">C4 model</a>
+        </div>        
+
+        <div class="section">
+            <div class="container">
+                <div class="row">
+                    <div class="col-sm-6 centered">
+                        <a href="https://structurizr.com/share/39258/diagrams#Containers" target="_blank"><img src="./img/example-1.png" alt="Example diagram as text" class="img-thumbnail" /></a>
+                    </div>
+                    <div class="col-sm-6 centered">
+                        <a href="https://structurizr.com/share/39258/explore/graph?people=true&softwareSystems=true&containers=true&components=true&view=Containers" target="_blank"><img src="./img/example-2.gif" alt="Example diagram as text" class="img-thumbnail" /></a>
+                    </div>
+                </div>
+                <div class="centered">
+                    <a href="https://structurizr.com/share/54915/diagrams#AmazonWebServicesDeployment" target="_blank"><img src="./img/example-3.png" alt="Example diagram as text" class="img-thumbnail" /></a>
+                </div>
+            </div>
+        </div>    
+
+        <div class="section">
+            <div class="container">
+                <h2>An architecture description language</h2>
+                <p>
+                    There has been a trend over the past few years towards text-based tooling, with the most popular examples including <a href="http://plantuml.com">PlantUML</a>,
+                    <a href="https://www.websequencediagrams.com">WebSequenceDiagrams</a> and <a href="https://mermaid-js.github.io/mermaid/">Mermaid</a>.
+                    With these tools, the diagram source is provided as text using a special domain-specific language, which the tool then visualises, typically with an automatic layout algorithm.
+                </p>
+
+                <p>
+                    These tools generally have a low barrier to entry, and the source text is easily version controlled.
+                    Also, it's relatively straightforward to automate the use of these tools in order to generate diagrams and documentation during your build process.
+                </p>
+        
+                <p>
+                    However, <b>each diagram needs to be defined separately, typically in a separate text file</b>.
+                    If you have the same element on two diagrams, and you want to change the name of that element, you need to make sure that you change the name everywhere it's used.
+                    The global search and replace features in most developer tooling does make this less of a problem, but it's just one way that a collection of diagrams can easily become inconsistent if not managed properly.
+                </p>
+        
+                <p>
+                    To solve this problem, we can create a model (with multiple views) as text instead.
+                    For example, using the Structurizr DSL:
+                </p>
+
+                <br />
+        
+                <p>
+                <pre><code class="codeSample">workspace "Getting Started" "This is a model of my software system." {
+
+    model {
+        user = person "User" "A user of my software system."
+        softwareSystem = softwareSystem "Software System" "My software system."
+
+        user -> softwareSystem "Uses"
+    }
+
+    views {
+        systemContext softwareSystem "SystemContext" "An example of a System Context diagram." {
+            elements *
+        }
+
+        styles {
+            element "Software System" {
+                background #1168bd
+                color #ffffff
+            }
+            element "Person" {
+                shape person
+                background #08427b
+                color #ffffff
+            }
+        }
+    }
+    
+}</code></pre>
+                </p>
+            
+                <br />
+
+                <p>
+                    This definition creates a model containing elements and relationships, creates a single view, and adds some styling. This can be published to the Structurizr cloud service via the <a href="https://structurizr.com/help/web-api" target="_blank">JSON-based web API</a>
+                    using the <a href="https://github.com/structurizr/publish" target="_blank">structurizr-publish</a> tool.
+                    Here's the resulting diagram when you open it in Structurizr, where the layout of the diagrams can be modified.
+                </p>
+
+                <br />
+        
+                <div class="row">
+                    <div class="col-sm-8 centered">
+                        <a href="https://structurizr.com/share/25441/diagrams" target="_blank"><img src="./img/getting-started.png" alt="A simple diagram" class="img-thumbnail" /></a>
+                    </div>
+                    <div class="col-sm-4 centered">
+                        <a href="https://structurizr.com/share/25441/diagrams" target="_blank"><img src="./img/getting-started-diagram-key.png" alt="A simple diagram" class="img-thumbnail" /></a>
+                        <div class="smaller" style="margin-top: 10px">A diagram key is automatically generated for you, based upon the <a href="https://structurizr.com/help/notation" target="_blank">styles</a> and <a href="https://structurizr.com/help/shapes" target="_blank">shapes</a> defined in the model.</div>
+                    </div>
+                </div>
+        
+                <br />
+
+                <p>
+                    The real power of creating models as text is starts to become evident when you create more than a single view inside the same textual definition.
+                    Rather than copying and pasting elements to reuse them across multiple diagrams, a model-based approach lets you reuse an element across multiple views (diagrams).
+                    The result is that diagrams stay in sync when you rename elements.
+                </p>
+                    </div>
+        </div>
+            
+        <div class="section">
+            <div class="container">
+                <a name="Benefits"></a>
+                <h2>Benefits of using text to create software architecture models</h2>
+                <p>
+                    Rather than argue over which diagramming tool you're going to use, why not use them all?
+                    A huge benefit of creating software architecture models as text is that you can visualise the views in that model using <b>multiple output formats</b>.
+                    For example, here are four versions of the same view (a C4 model container diagram), each created from the same text, and rendered in different diagramming tools.
+                </p>
+        
+                <div class="row">
+                    <div class="col-sm-6 centered">
+                        <img src="./img/code-output-1.png" alt="Graphviz" class="img-thumbnail" /></a>
+                        <p class="smaller" style="margin-top: 5px">
+                            Graphviz
+                        </p>
+        
+                        <img src="./img/code-output-2.png" alt="PlantUML" class="img-thumbnail" /></a>
+                        <p class="smaller" style="margin-top: 5px">
+                            PlantUML
+                        </p>
+                    </div>
+                    <div class="col-sm-6 centered">
+                        <img src="./img/code-output-3.png" alt="Structurizr" class="img-thumbnail" /></a>
+                        <p class="smaller" style="margin-top: 5px">
+                            <a href="https://structurizr.com/share/1/diagrams#components" target="_blank">Structurizr (traditional diagram)</a>
+                        </p>
+        
+                        <img src="./img/code-output-4.png" alt="Structurizr" class="img-thumbnail" /></a>
+                        <p class="smaller" style="margin-top: 5px">
+                            <a href="https://structurizr.com/share/1/explore/graph?view=components" target="_blank">Structurizr (graph visualisation)</a>
+                        </p>
+                    </div>
+                </div>
+
+                <p>
+                    You can also do the same with diagrams showing collaboration. Again, these were all generated from the same text, and rendered with different diagramming tools.
+                </p>
+
+                <div class="row">
+                    <div class="col-sm-6 centered">
+                        <img src="./img/code-output-5.png" alt="PlantUML" class="img-thumbnail" /></a>
+                        <p class="smaller" style="margin-top: 5px">
+                            PlantUML
+                        </p>
+
+                        <img src="./img/code-output-6.png" alt="WebSequenceDiagrams" class="img-thumbnail" /></a>
+                        <p class="smaller" style="margin-top: 5px">
+                            WebSequenceDiagrams
+                        </p>
+                    </div>
+                    <div class="col-sm-6 centered">            
+                        <img src="./img/code-output-7.png" alt="Structurizr" class="img-thumbnail" /></a>
+                        <p class="smaller" style="margin-top: 5px">
+                            <a href="https://structurizr.com/share/1/diagrams#viewListOfVets" target="_blank">Structurizr (dynamic diagram)</a>
+                        </p>
+                    </div>
+                </div>    
+
+                <br />
+
+                <p>
+                    In summary, the benefits of using text to create software architecture models include:
+                </p>
+        
+                <ul>
+                    <li><b>Multiple output formats</b>: Rather than being locked into a single tool, creating your model as text provides a way to export your views to multiple formats.</li>
+                    <li><b>Versionable</b>: Since the models are text, they are also versionable alongside your codebase in your version control system.
+                    <li><b>Living documentation</b>: The text to generate the model can be integrated with your automated build system to keep your models up to date; providing accurate, up-to-date, living software architecture diagrams that actually reflect the code.</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="container">
+                <a name="TradeOffs"></a>
+                <h2>Trade-offs of using text to create software architecture models</h2>
+                <p>
+                    Like any approach or tool, using text to create software architecture models is not a perfect solution, and there are a few trade-offs to be aware of:
+                </p>
+
+                <ul>
+                    <li><b>Least common denominator</b>:
+                        The trade-off with multiple output formats is that you take a "least common denominator" approach when defining your diagrams.
+                        This makes it harder to use features that are not supported by all of the rendering tools;
+                        such as different relationship types on UML diagrams (aggregation vs composition),
+                        or lifeline start and end on UML sequence diagrams. Arguably, few teams seem to use such features, but it's still worth bearing in mind.</li>
+                </ul>
+
+                <p>
+                    Only you can decide whether the trade-offs are appropriate for your use cases.
+                </p>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="container">
+                <a name="Implementations"></a>
+                <h2>Implementations</h2>
+                <p>
+                    The following implementations support the core concepts of the C4 model, and are compatible with the <a href="https://structurizr.com/help/web-api" target="_blank">web API</a> used by the <a href="https://structurizr.com" target="_blank">Structurizr cloud service and on-premises installation</a>, via an intermediary JSON format.
+                    Some client library implementations also provide support for other diagram output formats.
+                    All are open source.
+                </p>
+
+                <br />
+
+                <table class="table table-striped">
+                    <tr>
+                        <th>Library</th>
+                        <th>Input formats <div class="smaller">(create models using)</div></th>
+                        <th>Output formats <div class="smaller">(render diagrams using)</div></th>
+                    </tr>
+
+                    <tr>
+                        <td style="white-space: nowrap">
+                            Structurizr DSL
+                            <div class="small">
+                                <a href="https://github.com/structurizr/dsl" target="_blank">https://github.com/structurizr/dsl</a>
+                            </div>
+                        </td>
+                        <td>
+                            Text-based domain specific language
+                        </td>
+                        <td>
+                            Structurizr cloud service and on-premises installation,
+                            <div class="small">
+                                plus 
+                                <a href="https://github.com/structurizr/java-extensions/blob/master/structurizr-plantuml/src/com/structurizr/io/plantuml/PlantUMLWriter.java" target=_blank">PlantUML</a>,
+                                <a href="https://github.com/structurizr/java-extensions/blob/master/structurizr-plantuml/src/com/structurizr/io/plantuml/C4PlantUMLWriter.java" target=_blank">C4PlantUML</a>,
+                                <a href="https://github.com/structurizr/java-extensions/blob/master/structurizr-websequencediagrams/src/com/structurizr/io/websequencediagrams/WebSequenceDiagramsWriter.java" target=_blank">WebSequenceDiagrams</a>,
+                                <a href="https://github.com/structurizr/java-extensions/blob/master/structurizr-mermaid/src/com/structurizr/io/mermaid/MermaidWriter.java" target="_blank">Mermaid</a> (experimental), and
+                                <a href="https://github.com/structurizr/java-extensions/blob/master/structurizr-dot/src/com/structurizr/io/dot/DotWriter.java" target=_blank">DOT/Graphviz</a>
+                            </div>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td style="white-space: nowrap">
+                            Arch as code
+                            <div class="small">
+                                <a href="https://github.com/trilogy-group/arch-as-code" target="_blank">https://github.com/trilogy-group/arch-as-code</a>
+                            </div>
+                        </td>
+                        <td>YAML</td>
+                        <td>
+                            Structurizr cloud service and on-premises installation
+                        </td>
+                    </tr>
+
+                </table>
+        
+                <p>
+                    See the GitHub repos linked above for getting started guides and examples.
+                </p>
+            </div>
+        </div>
+
+        <div id="footer" class="structurizrBackgroundLight">
+            <p>
+                    <a href="https://c4model.com">C4 model</a> software architecture diagrams as text with <a href="https://structurizr.com" target="_blank">Structurizr</a>
+            </p>
+        </div>
+    </div>
+
+</body>
+</html>
