@@ -96,7 +96,8 @@
 
     views {
         systemContext softwareSystem "SystemContext" "An example of a System Context diagram." {
-            elements *
+            include *
+            autoLayout
         }
 
         styles {
@@ -263,21 +264,17 @@
                         <td style="white-space: nowrap">
                             Structurizr DSL
                             <div class="small">
-                                <a href="https://github.com/structurizr/dsl" target="_blank">https://github.com/structurizr/dsl</a>
+                                <a href="https://github.com/structurizr/cli" target="_blank">https://github.com/structurizr/cli</a>
                             </div>
                         </td>
                         <td>
                             Text-based domain specific language
                         </td>
                         <td>
-                            Structurizr cloud service and on-premises installation,
+                            Structurizr cloud service and on-premises installation
                             <div class="small">
-                                plus 
-                                <a href="https://github.com/structurizr/java-extensions/blob/master/structurizr-plantuml/src/com/structurizr/io/plantuml/PlantUMLWriter.java" target=_blank">PlantUML</a>,
-                                <a href="https://github.com/structurizr/java-extensions/blob/master/structurizr-plantuml/src/com/structurizr/io/plantuml/C4PlantUMLWriter.java" target=_blank">C4PlantUML</a>,
-                                <a href="https://github.com/structurizr/java-extensions/blob/master/structurizr-websequencediagrams/src/com/structurizr/io/websequencediagrams/WebSequenceDiagramsWriter.java" target=_blank">WebSequenceDiagrams</a>,
-                                <a href="https://github.com/structurizr/java-extensions/blob/master/structurizr-mermaid/src/com/structurizr/io/mermaid/MermaidWriter.java" target="_blank">Mermaid</a> (experimental), and
-                                <a href="https://github.com/structurizr/java-extensions/blob/master/structurizr-dot/src/com/structurizr/io/dot/DotWriter.java" target=_blank">DOT/Graphviz</a>
+                                <br />
+                                Workspaces can also be exported to PlantUML and WebSequenceDiagrams using the <a href="https://github.com/structurizr/cli" target="_blank">Structurizr CLI</a>.
                             </div>
                         </td>
                     </tr>
@@ -292,11 +289,15 @@
                         <td>YAML</td>
                         <td>
                             Structurizr cloud service and on-premises installation
+                            <div class="small">
+                                <br />
+                                Workspaces can also be exported to PlantUML and WebSequenceDiagrams using the <a href="https://github.com/structurizr/cli" target="_blank">Structurizr CLI</a>.
+                            </div>
                         </td>
                     </tr>
 
                 </table>
-        
+
                 <p>
                     See the GitHub repos linked above for getting started guides and examples.
                 </p>
